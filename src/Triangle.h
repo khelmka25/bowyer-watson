@@ -16,15 +16,15 @@ class Circle;
 class Triangle
 {
 public:
-    Node p, q, r;
+    Node nodeP, nodeQ, nodeR;
 
     std::array<Node, 3ull> nodes;
     std::array<Segment, 3ull> segments;
 
     enum class State : unsigned char {
-        kOkay,
+        kValid,
         kInvalid,
-    } state;
+    } state = State::kValid;
 
 public:
     Triangle() = default;

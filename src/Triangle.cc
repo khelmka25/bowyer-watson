@@ -6,52 +6,31 @@
 #include "Circle.h"
 #include "Segment.h"
 
-Triangle::Triangle(Node nodeP, Node nodeQ, Node nodeR)
-    : p(nodeP)
-    , q(nodeQ)
-    , r(nodeR)
-    , state(State::kOkay)
-    , circumCircle(this->computeCircumCircle(p, q, r))
+Triangle::Triangle(Node t_p, Node t_q, Node t_r)
+    : nodeP(t_p)
+    , nodeQ(t_q)
+    , nodeR(t_r)
+    , circumCircle(this->computeCircumCircle(nodeP, nodeQ, nodeR))
 {
     std::initializer_list<Node> node_list = {
-        nodeP,
-        nodeQ,
-        nodeR
+        t_p,
+        t_q,
+        t_r
     };
-    
+
     std::copy(node_list.begin(), node_list.end(), this->nodes.begin());
 
     std::initializer_list<Segment> segment_list = {
-        Segment(nodeP, nodeQ),
-        Segment(nodeQ, nodeR),
-        Segment(nodeR, nodeP)
+        Segment(t_p, t_q),
+        Segment(t_q, t_r),
+        Segment(t_r, t_p)
     };
 
     std::copy(segment_list.begin(), segment_list.end(), this->segments.begin());
 }
 
 Triangle::Triangle(const Segment& segment, const Node& node)
-    : p(segment.p)
-    , q(segment.q)
-    , r(node)
-    , state(State::kOkay)
-    , circumCircle(this->computeCircumCircle(segment.p, segment.q, node))
-{
-    std::initializer_list<Node> node_list = {
-        segment.p,
-        segment.q,
-        node
-    };
-    
-    std::copy(node_list.begin(), node_list.end(), this->nodes.begin());
-
-    std::initializer_list<Segment> segment_list = {
-        Segment(segment.p, segment.q),
-        Segment(segment.q, node),
-        Segment(node, segment.p)
-    };
-
-    std::copy(segment_list.begin(), segment_list.end(), this->segments.begin());
+    : Triangle(segment.nodeP, segment.nodeQ, node) {
 }
 
 Circle Triangle::computeCircumCircle(const Node& n1, const Node& n2, const Node& n3) noexcept
@@ -69,12 +48,12 @@ bool Triangle::isNodeInCircumCircle(const Node& n) const noexcept
 // friend operators
 bool operator==(const Triangle& lhs, const Triangle& rhs) noexcept
 {
-    return (lhs.p == rhs.p) && (lhs.q == rhs.q) && (lhs.r == rhs.r);
+    return (lhs.nodeP == rhs.nodeP) && (lhs.nodeQ == rhs.nodeQ) && (lhs.nodeR == rhs.nodeR);
 }
 
 bool operator!=(const Triangle& lhs, const Triangle& rhs) noexcept
 {
-    return lhs.p != rhs.p || lhs.q != rhs.q || lhs.r != rhs.r;
+    return lhs.nodeP != rhs.nodeP || lhs.nodeQ != rhs.nodeQ || lhs.nodeR != rhs.nodeR;
 }
 
 // circumcircle functions ...
@@ -101,11 +80,11 @@ Node Triangle::computeIntersection(const Node& n1, const Node& n2, const Node& n
     bottom = n2.x - n1.x;
 
     if (std::abs(bottom) == 0.0f) // ~/0 = infinite slope
-        segN1N2.setSlopeType(SlopeType::INFINITE_SLOPE);
+        segN1N2.setSlopeType(SlopeType::kInfinite);
     else if (std::abs(top) == 0.0f) // 0/~ = zero slope
-        segN1N2.setSlopeType(SlopeType::ZERO_SLOPE);
+        segN1N2.setSlopeType(SlopeType::kZero);
     else                           // ~/~ = normal slope
-        segN1N2.setSlopeType(SlopeType::NORMAL_SLOPE);
+        segN1N2.setSlopeType(SlopeType::kNormal);
 
     // Nodes Q and R ============
     Segment segN2N3 = Segment(n2, n3);
@@ -113,18 +92,18 @@ Node Triangle::computeIntersection(const Node& n1, const Node& n2, const Node& n
     bottom = n3.x - n2.x;
 
     if (std::abs(bottom) == 0.0f) // ~/0 = infinite slope
-        segN2N3.setSlopeType(SlopeType::INFINITE_SLOPE);
+        segN2N3.setSlopeType(SlopeType::kInfinite);
     else if (std::abs(top) == 0.0f) // 0/~ = zero slope
-        segN2N3.setSlopeType(SlopeType::ZERO_SLOPE);
+        segN2N3.setSlopeType(SlopeType::kZero);
     else                           // ~/~ = normal slope
-        segN2N3.setSlopeType(SlopeType::NORMAL_SLOPE);
+        segN2N3.setSlopeType(SlopeType::kNormal);
 
     // ==========================
     Node intersection;
 
     /// ====================================================
     // completely normal triangle
-    if (segN1N2.getSlopeType() == SlopeType::NORMAL_SLOPE && segN2N3.getSlopeType() == SlopeType::NORMAL_SLOPE)
+    if (segN1N2.getSlopeType() == SlopeType::kNormal && segN2N3.getSlopeType() == SlopeType::kNormal)
     {
         // setup y = mx + b for segment PQ
         float m1 = util::perpendicularSlope(util::slope(segN1N2));
@@ -141,20 +120,20 @@ Node Triangle::computeIntersection(const Node& n1, const Node& n2, const Node& n
         return intersection;
     }
     // right triangles
-    else if (segN1N2.getSlopeType() == SlopeType::INFINITE_SLOPE && segN2N3.getSlopeType() == SlopeType::ZERO_SLOPE)
+    else if (segN1N2.getSlopeType() == SlopeType::kInfinite && segN2N3.getSlopeType() == SlopeType::kZero)
     {
         intersection.y = util::midPoint(segN1N2).y;
         intersection.x = util::midPoint(segN2N3).x;
         return intersection;
     }
-    else if (segN1N2.getSlopeType() == SlopeType::ZERO_SLOPE && segN2N3.getSlopeType() == SlopeType::INFINITE_SLOPE)
+    else if (segN1N2.getSlopeType() == SlopeType::kZero && segN2N3.getSlopeType() == SlopeType::kInfinite)
     {
         intersection.y = util::midPoint(segN2N3).y;
         intersection.x = util::midPoint(segN1N2).x;
         return intersection;
     }
     // others ...
-    else if (segN1N2.getSlopeType() == SlopeType::INFINITE_SLOPE && segN2N3.getSlopeType() == SlopeType::NORMAL_SLOPE)
+    else if (segN1N2.getSlopeType() == SlopeType::kInfinite && segN2N3.getSlopeType() == SlopeType::kNormal)
     {
         intersection.y = util::midPoint(segN1N2).y;
         // for the normal line y = mx + b
@@ -165,7 +144,7 @@ Node Triangle::computeIntersection(const Node& n1, const Node& n2, const Node& n
         intersection.x = (intersection.y - b) / m;
         return intersection;
     }
-    else if (segN1N2.getSlopeType() == SlopeType::ZERO_SLOPE && segN2N3.getSlopeType() == SlopeType::NORMAL_SLOPE)
+    else if (segN1N2.getSlopeType() == SlopeType::kZero && segN2N3.getSlopeType() == SlopeType::kNormal)
     {
         intersection.x = util::midPoint(segN1N2).x;
         // for the nomal line y = mx + b
@@ -176,7 +155,7 @@ Node Triangle::computeIntersection(const Node& n1, const Node& n2, const Node& n
         intersection.y = m * intersection.x + b;
         return intersection;
     }
-    else if (segN1N2.getSlopeType() == SlopeType::NORMAL_SLOPE && segN2N3.getSlopeType() == SlopeType::INFINITE_SLOPE)
+    else if (segN1N2.getSlopeType() == SlopeType::kNormal && segN2N3.getSlopeType() == SlopeType::kInfinite)
     {
         intersection.y = util::midPoint(segN1N2).y;
         // for the normal line y = mx + b
@@ -187,7 +166,7 @@ Node Triangle::computeIntersection(const Node& n1, const Node& n2, const Node& n
         intersection.x = (intersection.y - b) / m;
         return intersection;
     }
-    else if (segN1N2.getSlopeType() == SlopeType::NORMAL_SLOPE && segN2N3.getSlopeType() == SlopeType::ZERO_SLOPE)
+    else if (segN1N2.getSlopeType() == SlopeType::kNormal && segN2N3.getSlopeType() == SlopeType::kZero)
     {
         intersection.x = util::midPoint(segN1N2).x;
         // for the nomal line y = mx + b

@@ -9,36 +9,36 @@
 namespace util {
     /**==============================================
     *@return distance between two nodes */
-    static inline float distance(const Node& n1, const Node& n2) noexcept
+    static inline float distance(const Node& node0, const Node& node1) noexcept
     {
-        return std::sqrt(std::powf(n2.x - n1.x, 2) + std::powf(n2.y - n1.y, 2));
+        return std::sqrt(std::powf(node1.x - node0.x, 2) + std::powf(node1.y - node0.y, 2));
     }
 
     /**==============================================
     *@return the midPoint of two nodes */
-    static inline Node midPoint(const Node& n1, const Node& n2) noexcept
+    static inline Node midPoint(const Node& node0, const Node& node1) noexcept
     {
-        return Node((n1.x + n2.x) / 2.0f, (n1.y + n2.y) / 2.0f);
+        return Node((node0.x + node1.x) / 2.0f, (node0.y + node1.y) / 2.0f);
     }
 
     /**==============================================
     *@return the midPoint of a segment */
     static inline Node midPoint(const Segment& s) noexcept
     {
-        return Node((s.p.x + s.q.x) / 2.0f, (s.p.y + s.q.y) / 2.0f);
+        return Node((s.nodeP.x + s.nodeQ.x) / 2.0f, (s.nodeP.y + s.nodeQ.y) / 2.0f);
     }
 
-    static inline float slope(const Node& n1, const Node& n2) noexcept
+    static inline float slope(const Node& node0, const Node& node1) noexcept
     {
-        float top = n2.y - n1.y;
-        float bottom = n2.x - n1.x;
+        float top = node1.y - node0.y;
+        float bottom = node1.x - node0.x;
         return top / bottom;
     }
 
     static inline float slope(const Segment& s) noexcept
     {
-        float top = s.q.y - s.p.y; // dy
-        float bottom = s.q.x - s.p.x; // dx
+        float top = s.nodeQ.y - s.nodeP.y; // dy
+        float bottom = s.nodeQ.x - s.nodeP.x; // dx
         return top / bottom;
     }
 

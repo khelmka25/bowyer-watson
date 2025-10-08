@@ -13,7 +13,7 @@ Shader::Shader(std::string&& vertexPath, std::string&& fragmentPath)
     const char* vertexShaderSourcePtr = vertexShaderSource.c_str();
 
     // https://registry.khronos.org/OpenGL-Refpages/gl4/html/glShaderSource.xhtml
-    glShaderSource(vertexShaderHandle, 1, &vertexShaderSourcePtr, NULL);
+    glShaderSource(vertexShaderHandle, 1, &vertexShaderSourcePtr, nullptr);
 
     // https://registry.khronos.org/OpenGL-Refpages/gl4/html/glCompileShader.xhtml
     glCompileShader(vertexShaderHandle);
@@ -24,7 +24,7 @@ Shader::Shader(std::string&& vertexPath, std::string&& fragmentPath)
     if (vertexStatus != GL_TRUE) {
         GLchar infoLog[1024];
         // https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetShaderInfoLog.xhtml
-        glGetShaderInfoLog(vertexShaderHandle, 1024, NULL, infoLog);
+        glGetShaderInfoLog(vertexShaderHandle, 1024, nullptr, infoLog);
         std::cout << infoLog << std::endl;
     }
 
@@ -35,14 +35,14 @@ Shader::Shader(std::string&& vertexPath, std::string&& fragmentPath)
     std::string fragmentShaderSource = Shader::loadShaderCode(fragmentPath);
     const char* fragmentShaderSourcePtr = fragmentShaderSource.c_str();
 
-    glShaderSource(fragmentShaderHandle, 1, &fragmentShaderSourcePtr, NULL);
+    glShaderSource(fragmentShaderHandle, 1, &fragmentShaderSourcePtr, nullptr);
     glCompileShader(fragmentShaderHandle);
 
     GLint fragmentStatus;
     glGetShaderiv(fragmentShaderHandle, GL_COMPILE_STATUS, &fragmentStatus);
     if (fragmentStatus != GL_TRUE) {
         GLchar infoLog[1024];
-        glGetShaderInfoLog(fragmentShaderHandle, 1024, NULL, infoLog);
+        glGetShaderInfoLog(fragmentShaderHandle, 1024, nullptr, infoLog);
         std::cout << infoLog << std::endl;
     }
 
@@ -61,7 +61,7 @@ Shader::Shader(std::string&& vertexPath, std::string&& fragmentPath)
     glGetProgramiv(shaderProgramHandle, GL_LINK_STATUS, &shaderStatus);
     if (shaderStatus != GL_TRUE) {
         GLchar infoLog[1024];
-        glGetProgramInfoLog(shaderProgramHandle, 1024, NULL, infoLog);
+        glGetProgramInfoLog(shaderProgramHandle, 1024, nullptr, infoLog);
         std::cout << infoLog << std::endl;
     }
 
@@ -93,14 +93,9 @@ std::string Shader::loadShaderCode(std::string path) noexcept(false) {
     return source_code;
 }
 
-unsigned int Shader::getId(void)
+GLuint Shader::getProgramHandle(void)
 {
     return shaderProgramHandle;
-}
-
-void Shader::use() const
-{
-    glUseProgram(shaderProgramHandle);
 }
 
 /// Might use these later alter the generated triangles' colors

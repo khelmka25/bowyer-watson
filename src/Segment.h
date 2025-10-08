@@ -5,25 +5,29 @@
 
 enum SlopeType
 {
-    NORMAL_SLOPE,
-    ZERO_SLOPE,
-    INFINITE_SLOPE
+    kNormal,
+    kZero,
+    kInfinite
 };
 
 class Segment
 {
 public:
     Segment() = default;
-    Segment(Node p_, Node q_) : p(p_), q(q_), slopeType(SlopeType::NORMAL_SLOPE) {}
+    Segment(Node t_p, Node t_q)
+        : nodeP(t_p)
+        , nodeQ(t_q)
+        , slopeType(SlopeType::kNormal) {
+    }
 
     inline friend bool operator == (const Segment& s1, const Segment& s2) noexcept
     {
-        return (s1.p == s2.p && s1.q == s2.q) || (s1.p == s2.q && s1.q == s2.p);
+        return (s1.nodeP == s2.nodeP && s1.nodeQ == s2.nodeQ) || (s1.nodeP == s2.nodeQ && s1.nodeQ == s2.nodeP);
     }
 
     inline friend bool operator != (const Segment& s1, const Segment& s2) noexcept
     {
-        return (s1.p != s2.p) || (s1.q != s2.q);
+        return (s1.nodeP != s2.nodeP) || (s1.nodeQ != s2.nodeQ);
     }
 
     inline void setSlopeType(const SlopeType& value) noexcept
@@ -37,7 +41,7 @@ public:
     }
 
 public:
-    Node p, q;
+    Node nodeP, nodeQ;
 
 private:
     SlopeType slopeType;

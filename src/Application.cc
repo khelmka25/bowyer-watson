@@ -27,11 +27,14 @@ Application::Application(std::string&& t_title
             Key(GLFW_KEY_MINUS, std::bind(Triangulation::decrementTriangleCount, &this->triangulation))
         })
 {
-    std::cout
-        << "================================================================================\n"
-        << "Welcome to my Bowyer Watson Algorithm implementation with C++ and OpenGL. V.1.03\n"
-        << "Press `R` to generate a new triangulation.\n"
-        << "================================================================================\n";
+    std::cout << 
+            "------------------------------------------------------------------------------------------\n"
+            "Welcome to my Bowyer Watson Algorithm implementation using C++, OpenGL 3.4, and GLEW 2.2.0\n"
+            "Press R to build a new triangulation\n"
+            "Press - to remove 5 triangles and build a new triangulation\n"
+            "Press + to add 5 traingles and build a new triangulation\n"
+            "Press W to toggle between wireframe and shaded drawing\n"
+            "------------------------------------------------------------------------------------------\n";
 
     glPolygonMode(GL_FRONT_AND_BACK, wireFrameState ? GL_LINE : GL_FILL);
 
@@ -84,7 +87,7 @@ GLFWwindow* Application::createGlfwContext() const
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create Window
-    GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
     if (window == nullptr) {
         glfwTerminate();
         throw std::runtime_error("Could not create glfw context");

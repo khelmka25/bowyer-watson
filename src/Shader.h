@@ -14,11 +14,10 @@ public:
     Shader(std::string&& vertexPath, std::string&& fragmentPath);
     ~Shader();
     
-    unsigned int getId(void);
+    GLuint getProgramHandle(void);
 
-    static std::string loadShaderCode(std::string p) noexcept (false);
+    static std::string loadShaderCode(std::string path) noexcept (false);
 
-    void use() const;
     void setBool(const std::string &name, bool value) const;
     void setInt(const std::string &name, int value) const;
     void setFloat(const std::string &name, float value) const;

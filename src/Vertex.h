@@ -6,8 +6,15 @@ class Vertex
 {
 public:
     Vertex() = default;
-    Vertex(float x_, float y_, float z_, float r_, float g_, float b_)
-            : x(x_), y(y_), z(z_), r(r_), g(g_), b(b_) {}
+    Vertex(float t_x, float t_y, float t_z, float t_r, float t_g, float t_b)
+        : x(t_x)
+        , y(t_y)
+        , z(t_z)
+        , r(t_r)
+        , g(t_g)
+        , b(t_b) {
+
+    }
 public:
     float x, y, z, r, g, b;
 };

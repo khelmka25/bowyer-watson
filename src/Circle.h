@@ -10,11 +10,15 @@ class Circle
 {
 public:
     Circle() = default;
-    Circle(Node center_, float radius_) : center(center_), radius(radius_) {}
+    Circle(Node t_center, float t_radius)
+        : center(t_center)
+        , radius(t_radius) {
+
+    }
 
     inline bool contains(const Node& n) const noexcept
     {
-        return util::distance(this->center, n) < radius;
+        return util::distance(this->center, n) <= radius;
     }
 
 public:

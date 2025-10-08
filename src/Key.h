@@ -16,10 +16,7 @@ public:
     }
 
     void poll(GLFWwindow* glfwContext) {
-        currentState = false;
-        if (glfwGetKey(glfwContext, keycode) == GLFW_PRESS) {
-            currentState = true;
-        }
+        currentState = (glfwGetKey(glfwContext, keycode) == GLFW_PRESS);
 
         if (currentState && !previousState) /*Pressed*/ {
             callback();

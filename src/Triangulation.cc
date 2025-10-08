@@ -113,7 +113,7 @@ void Triangulation::runBowyerWatsonAlgorithm(void)
         for (auto tri = triangles.begin(); tri != triangles.end(); tri++)
         {
             // if triangle contains a vertex from original super-triangle
-            if (tri->state != Triangle::State::kOkay) {
+            if (tri->state != Triangle::State::kValid) {
                 triangles.erase(tri--);
             }
         }

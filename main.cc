@@ -10,9 +10,9 @@ int main()
     try {
         std::srand((unsigned int)time(0));
         Application app("Bowyer Watson Algorithm"s, 500, 250);
-        do {
+        while (app.active()) {
             app.run();
-        } while (app.active());
+        }
     } catch (std::exception& e) {
         std::cout << e.what() << std::endl;
     }
