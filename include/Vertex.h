@@ -2,9 +2,8 @@
 #define VERTEX_H
 
 /** a substitute to using an array of 6 floats*/
-class Vertex
+struct Vertex
 {
-public:
     Vertex() = default;
     Vertex(float t_x, float t_y, float t_z, float t_r, float t_g, float t_b)
         : x(t_x)
@@ -15,7 +14,7 @@ public:
         , b(t_b) {
 
     }
-public:
+
     float x, y, z, r, g, b;
 };
 

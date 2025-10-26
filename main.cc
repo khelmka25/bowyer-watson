@@ -1,4 +1,4 @@
-#include "src/Application.h"
+#include "Application.h"
 
 #include <iostream>
 #include <string>

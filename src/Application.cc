@@ -1,9 +1,11 @@
-#include "application.h"
 
-#include <GL/glew.h>
+
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <string>
+
+#include "Application.h"
 
 #include "Key.h"
 
@@ -107,9 +109,9 @@ GLFWwindow* Application::createGlfwContext() const
     );
 
     // Load glew
-    if (glewInit() != GLEW_OK) {
+    if (!gladLoadGLLoader(GLADloadproc(glfwGetProcAddress))) {
         glfwTerminate();
-        throw std::runtime_error("Could not initialize glew");
+        throw std::runtime_error("Could not initialize glad");
     }
 
     return window;

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <cmath>
+#include <algorithm>
 
 #include "Node.h"
 #include "Vertex.h"
@@ -13,19 +15,20 @@ public:
 
     std::size_t size() const noexcept;
 
-    std::size_t maxTriangles;
+    std::size_t maxTriangleCount;
 
     void rebuild();
     void incrementTriangleCount();
     void decrementTriangleCount();
 private:
 
+    std::vector<Triangle> findInvalidTriangles(const Node* const) noexcept;
+
     void clear() noexcept;
     void build() noexcept;
-    void bufferData(void);
+    void bufferData(void) const noexcept;
     
-    std::vector<Triangle> triangles;
-    std::vector<Node> nodes;
+    std::vector<Triangle> m_Triangles;
 
     unsigned int vertexBufferHandle;
     unsigned int vertexArrayHandle;

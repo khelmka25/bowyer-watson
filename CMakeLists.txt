@@ -1,11 +1,37 @@
 cmake_minimum_required(VERSION 3.20)
-project(bowyer_watson CXX)
+project(bowyer_watson)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
+# internal library
+aux_source_directory(${CMAKE_SOURCE_DIR}/src SOURCES)
+add_library(engine STATIC ${SOURCES})
+target_include_directories(engine PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    # what is point of this if target_link_libraries exists
+    ${CMAKE_CURRENT_SOURCE_DIR}/deps/glfw/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/deps/glad/include
+)
+
+# glfw
+add_subdirectory(deps/glfw)
+
+# glad
+# aux_source_directory(${CMAKE_SOURCE_DIR}/deps/glad/src GLAD_SOURCE)
+add_library(glad STATIC ${CMAKE_SOURCE_DIR}/deps/glad/src/glad.c)
+target_include_directories(glad PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/deps/glad/include
+)
+
+# main project
 add_executable(${PROJECT_NAME} main.cc)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    engine
+    glfw
+    glad
+    opengl32
+)
 
 target_compile_options(${PROJECT_NAME} 
     PRIVATE 
@@ -13,18 +39,5 @@ target_compile_options(${PROJECT_NAME}
     -Wall 
     -Wextra
     -Wpedantic
-)
-
-aux_source_directory(src SOURCE_DIR)
-target_sources(${PROJECT_NAME} PRIVATE ${SOURCE_DIR})
-
-target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
-find_package(GLEW REQUIRED)
-find_package(glfw3 REQUIRED)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    glfw 
-    GLEW::GLEW
-    opengl32
+    -Wfloat-equal
 )
