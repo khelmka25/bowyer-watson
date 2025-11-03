@@ -1,12 +1,11 @@
-#include "Application.h"
-
 #include <iostream>
 #include <string>
 
+#include "Application.h"
+
 using namespace std::literals::string_literals;
 
-int main()
-{
+int main() {
     try {
         std::srand((unsigned int)time(0));
         Application app("Bowyer Watson Algorithm"s, 500, 250);

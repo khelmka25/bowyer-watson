@@ -9,7 +9,6 @@ aux_source_directory(${CMAKE_SOURCE_DIR}/src SOURCES)
 add_library(engine STATIC ${SOURCES})
 target_include_directories(engine PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    # what is point of this if target_link_libraries exists
     ${CMAKE_CURRENT_SOURCE_DIR}/deps/glfw/include
     ${CMAKE_CURRENT_SOURCE_DIR}/deps/glad/include
 )
@@ -20,7 +19,7 @@ add_subdirectory(deps/glfw)
 # glad
 # aux_source_directory(${CMAKE_SOURCE_DIR}/deps/glad/src GLAD_SOURCE)
 add_library(glad STATIC ${CMAKE_SOURCE_DIR}/deps/glad/src/glad.c)
-target_include_directories(glad PUBLIC
+target_include_directories(glad PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/deps/glad/include
 )
 
