@@ -1,7 +1,7 @@
 #ifndef SEGMENT_H
 #define SEGMENT_H
 
-#include "node.h"
+#include "Node.h"
 
 enum SlopeType
 {

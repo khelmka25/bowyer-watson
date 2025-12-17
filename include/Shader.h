@@ -11,12 +11,12 @@
 class Shader
 {
 public:
-    Shader(std::string&& vertexPath, std::string&& fragmentPath);
+    Shader(std::string_view vertexPath, std::string_view fragmentPath);
     ~Shader();
     
     GLuint getProgramHandle(void);
 
-    static std::string loadShaderCode(std::string path) noexcept (false);
+    static std::string loadShaderCode(std::string_view path) noexcept (false);
 
     void setBool(const std::string &name, bool value) const;
     void setInt(const std::string &name, int value) const;

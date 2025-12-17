@@ -29,7 +29,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     engine
     glfw
     glad
-    opengl32
 )
 
 target_compile_options(${PROJECT_NAME} 
@@ -39,4 +38,5 @@ target_compile_options(${PROJECT_NAME}
     -Wextra
     -Wpedantic
     -Wfloat-equal
+    -g
 )

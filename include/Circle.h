@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "Util.h"
-#include "node.h"
+#include "Node.h"
 
 class Circle
 {

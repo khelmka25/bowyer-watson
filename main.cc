@@ -3,12 +3,12 @@
 
 #include "Application.h"
 
-using namespace std::literals::string_literals;
 
 int main() {
     try {
         std::srand((unsigned int)time(0));
-        Application app("Bowyer Watson Algorithm"s, 500, 250);
+        using namespace std::literals::string_view_literals;
+        Application app("Bowyer Watson Algorithm"sv, 500, 250);
         while (app.active()) {
             app.run();
         }

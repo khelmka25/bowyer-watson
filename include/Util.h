@@ -3,15 +3,17 @@
 #include <cstdlib>
 #include <cmath>
 
-#include "segment.h"
-#include "node.h"
+#include "Segment.h"
+#include "Node.h"
 
 namespace util {
     /**==============================================
     *@return distance between two nodes */
     static inline float distance(const Node& node0, const Node& node1) noexcept
     {
-        return std::sqrt(std::powf(node1.x - node0.x, 2) + std::powf(node1.y - node0.y, 2));
+        const auto dx2 = (node1.x - node0.x) * (node1.x - node0.x);
+        const auto dy2 = (node1.y - node0.y) * (node1.y - node0.y);
+        return std::sqrt(dx2 + dy2);
     }
 
     /**==============================================

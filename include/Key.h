@@ -1,14 +1,16 @@
 #pragma once
 
-#include <glad/glad.h>
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 #include <functional>
 
 // utility for wrapping GLFW key presses
 class Key {
 public:
-    Key(int t_keycode, std::function<void()> t_callback)
+    Key() = default;
+    explicit Key(int t_keycode, std::function<void()> t_callback)
         : callback(t_callback)
         , keycode(t_keycode)
         , currentState(0)
@@ -33,9 +35,10 @@ public:
 
 private:
     // 32 bytes
-    std::function<void()> callback;
+    std::function<void()> callback = nullptr;
     // 4 bytes
-    int keycode;
+    int keycode = 0;
     // 1 byte each
-    bool currentState, previousState;
+    bool currentState = false;
+    bool previousState = false;
 };

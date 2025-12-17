@@ -1,7 +1,8 @@
 #include "Triangulation.h"
 
-#include <glad/glad.h>
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 Triangulation::Triangulation(std::size_t t_maxTriangles)
     : maxTriangleCount(t_maxTriangles)
@@ -45,14 +46,14 @@ std::size_t Triangulation::size() const noexcept {
 }
 
 void Triangulation::incrementTriangleCount() {
-    constexpr std::size_t kIncrement = 5ull;
-    maxTriangleCount = std::min(maxTriangleCount + kIncrement, 1000ull);
+    constexpr auto kIncrement = 5ul;
+    maxTriangleCount = std::min(maxTriangleCount + kIncrement, 1000ul);
     std::cout << "Triangle Count Increased to " << maxTriangleCount << std::endl;
     rebuild();
 }
 
 void Triangulation::decrementTriangleCount() {
-    constexpr std::size_t kDecrement = 5ull;
+    constexpr auto kDecrement = 5ul;
     maxTriangleCount = std::max(maxTriangleCount - kDecrement, kDecrement);
     std::cout << "Triangle Count Decreased to " << maxTriangleCount << std::endl;
     rebuild();

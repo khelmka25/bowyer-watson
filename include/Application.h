@@ -6,23 +6,24 @@
 #include <random>
 #include <iostream>
 
-#include <glad/glad.h>
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 #include "Triangulation.h"
-#include "node.h"
-#include "vertex.h"
-#include "shader.h"
-#include "segment.h"
-#include "segment.h"
-#include "triangle.h"
+#include "Node.h"
+#include "Vertex.h"
+#include "Shader.h"
+#include "Segment.h"
+#include "Segment.h"
+#include "Triangle.h"
 #include "Util.h"
 #include "Key.h"
 
 class Application
 {
 public:
-    explicit Application(std::string&& appTitle, int screenWidth, int screenHeight);
+    explicit Application(std::string_view appTitle, int screenWidth, int screenHeight);
     ~Application() noexcept;
 
     bool active() const noexcept;

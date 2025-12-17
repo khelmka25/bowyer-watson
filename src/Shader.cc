@@ -2,7 +2,7 @@
 
 #include <filesystem>
 
-Shader::Shader(std::string&& vertexPath, std::string&& fragmentPath)
+Shader::Shader(std::string_view vertexPath, std::string_view fragmentPath)
 {
     /*Vertex Shader*/
 
@@ -78,8 +78,8 @@ Shader::~Shader()
     glDeleteShader(fragmentShaderHandle);
 }
 
-std::string Shader::loadShaderCode(std::string path) noexcept(false) {
-    std::ifstream sourceCodeFile(path);
+std::string Shader::loadShaderCode(std::string_view path) noexcept(false) {
+    std::ifstream sourceCodeFile(path.data());
     if (sourceCodeFile.fail()) {
         std::cout << "Failed to open " << std::quoted(path) << std::endl;
         return {};

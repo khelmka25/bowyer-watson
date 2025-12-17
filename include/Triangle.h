@@ -6,8 +6,8 @@
 
 #include "Util.h"
 #include "Circle.h"
-#include "node.h"
-#include "segment.h"
+#include "Node.h"
+#include "Segment.h"
 
 class Node;
 class Circle;

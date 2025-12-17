@@ -1,7 +1,8 @@
 
 
-#include <glad/glad.h>
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 #include <string>
 
@@ -9,9 +10,9 @@
 
 #include "Key.h"
 
-using namespace std::literals::string_literals;
+using namespace std::literals::string_view_literals;
 
-Application::Application(std::string&& t_title
+Application::Application(std::string_view t_title
     , int t_width
     , int t_height
 )
@@ -19,14 +20,14 @@ Application::Application(std::string&& t_title
     , width(t_width)
     , height(t_height)
     , glfwContext(createGlfwContext())
-    , shader("shaders/vertexShader.glsl"s, "shaders/fragmentShader.glsl"s)
+    , shader("shaders/vertexShader.glsl"sv, "shaders/fragmentShader.glsl"sv)
     , triangulation(100ull)
     , wireFrameState(0)
     , keys({
-            Key(GLFW_KEY_W, std::bind(Application::toggleWireframeState, this)),
-            Key(GLFW_KEY_R, std::bind(Triangulation::rebuild, &this->triangulation)),
-            Key(GLFW_KEY_EQUAL, std::bind(Triangulation::incrementTriangleCount, &this->triangulation)),
-            Key(GLFW_KEY_MINUS, std::bind(Triangulation::decrementTriangleCount, &this->triangulation))
+            Key(GLFW_KEY_W, std::bind(&Application::toggleWireframeState, this)),
+            Key(GLFW_KEY_R, std::bind(&Triangulation::rebuild, &this->triangulation)),
+            Key(GLFW_KEY_EQUAL, std::bind(&Triangulation::incrementTriangleCount, &this->triangulation)),
+            Key(GLFW_KEY_MINUS, std::bind(&Triangulation::decrementTriangleCount, &this->triangulation))
         })
 {
     std::cout << 
